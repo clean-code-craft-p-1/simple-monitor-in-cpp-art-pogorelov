@@ -6,6 +6,7 @@
 
 #include <CLI/CLI.hpp>
 
+#include <format>
 #include <iostream>
 
 int main(const int argc, char* argv[])
