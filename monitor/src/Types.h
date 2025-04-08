@@ -4,19 +4,14 @@
 
 #include <cstdint>
 #include <map>
+#include <optional>
 #include <string>
 #include <variant>
 
 namespace Types {
 
-template <typename T>
-struct Range;
-
-struct Vital;
-
 using IdType    = std::uint16_t;
 using ValueType = double;
-using Vitals    = std::map<IdType, Vital>;
 
 template <typename T>
 struct Range
@@ -25,7 +20,7 @@ struct Range
     T min;
     T max;
 
-    [[nodiscard]] bool contains(const T value) const
+    [[nodiscard]] bool contains(const T value) const noexcept
     {
         return value >= min && value <= max;
     }
@@ -39,4 +34,16 @@ struct Vital
     std::string      errorMessage;
 };
 
+class Vitals : public std::map<IdType, Vital>
+{
+  public:
+    std::optional<Vital> getVital(const IdType id) const noexcept
+    {
+        if (const auto it = find(id); it != end())
+        {
+            return it->second;
+        }
+        return std::nullopt;
+    }
+};
 } // namespace Types

@@ -4,6 +4,7 @@
 
 #include <format>
 #include <numeric>
+#include <string>
 
 namespace {
 constexpr auto kLineFormat = "{:>3} | {:>6} | {:>6} | {:20}\n";

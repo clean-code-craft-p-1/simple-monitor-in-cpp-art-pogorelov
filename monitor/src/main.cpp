@@ -1,6 +1,7 @@
 // Copyright(c), Philips Medical Systems Nederland B.V., IGT-Devices
 
 #include "Config.h"
+#include "ConsoleUI.h"
 #include "Monitor.h"
 #include "Print.h"
 
@@ -8,6 +9,7 @@
 
 #include <format>
 #include <iostream>
+#include <string>
 
 int main(const int argc, char* argv[])
 {
@@ -20,5 +22,6 @@ int main(const int argc, char* argv[])
     const auto vitals = Config::load(configPath);
     std::cout << std::format("Configuration from {}:\n{}", configPath, toString(vitals));
 
-    return Monitor::launch(vitals);
+    auto consoleUI = ConsoleUI{};
+    return Monitor::launch(vitals, consoleUI);
 }

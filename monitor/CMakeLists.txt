@@ -11,7 +11,10 @@ add_library(${PROJECT_NAME}.Lib
         src/Print.cpp
         src/Print.h
         src/Monitor.h
-        src/Monitor.cpp)
+        src/Monitor.cpp
+        src/UI.h
+        src/ConsoleUI.cpp
+        src/ConsoleUI.h)
 
 target_link_libraries(${PROJECT_NAME}.Lib
         PUBLIC yaml-cpp::yaml-cpp)

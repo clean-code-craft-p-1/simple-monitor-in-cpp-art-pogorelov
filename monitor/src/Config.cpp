@@ -2,17 +2,23 @@
 
 #include "Config.h"
 
-#include <string>
-
 #include <yaml-cpp/node/node.h>
 #include <yaml-cpp/node/parse.h>
 #include <yaml-cpp/yaml.h>
+
+#include <filesystem>
+#include <string>
 
 namespace Config {
 
 Types::Vitals load(const std::filesystem::path& path)
 {
-    using namespace Types;
+    using Types::IdType;
+    using Types::Range;
+    using Types::ValueType;
+    using Types::Vital;
+    using Types::Vitals;
+
     Vitals vitals;
     for (const auto& node : YAML::LoadFile(path.string()))
     {
