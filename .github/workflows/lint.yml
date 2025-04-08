@@ -26,12 +26,12 @@ jobs:
         cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
     - name: cpplint
       run: |
-        cpplint  --filter=-legal --linelength=100 *.cpp *.h
+        find monitor/ -type f \( -name "*.cpp" -o -name "*.h" \) ! -path "monitor/test/*" | xargs cpplint --filter=-legal --linelength=100
 
     - name: cppcheck
       run: |
-        cppcheck --enable=all --error-exitcode=1 --suppress=missingIncludeSystem --std=c++20 $(find . -name "*.cpp" -o -name "*.h")
+        cppcheck  monitor/ --exclude=monitor/test --enable=all --error-exitcode=1 --suppress=missingIncludeSystem --std=c++20
 
     - name: clang-format
       run: |
-        clang-tidy -p=. *.cpp *.h
+        find monitor/ -type f \( -name "*.cpp" -o -name "*.h" \) ! -path "monitor/test/*" | xargs clang-tidy -p=.
