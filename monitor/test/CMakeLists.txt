@@ -5,6 +5,7 @@ add_executable(
         src/ConfigTest.cpp
         src/PrintTest.cpp
         src/RangeTest.cpp
+        src/MonitorTest.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src ../src)
