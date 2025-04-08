@@ -15,17 +15,15 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
+    - name: git submodule update
+      run: |
+        git submodule update --init --recursive
     - name: install tools
       run: |
         pip install cpplint
         sudo apt-get install -y clang-tidy
         sudo apt-get install -y cppcheck
         cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
-
-    - name: git submodule update
-      run: |
-        git submodule update --init --recursive  
-
     - name: cpplint
       run: |
         cpplint  --filter=-legal --linelength=100 *.cpp *.h
