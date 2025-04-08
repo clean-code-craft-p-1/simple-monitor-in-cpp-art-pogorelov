@@ -30,7 +30,7 @@ jobs:
 
     - name: cppcheck
       run: |
-        cppcheck --enable=all --error-exitcode=1 --suppress=missingIncludeSystem --std=c++20 *.cpp *.h
+        cppcheck --enable=all --error-exitcode=1 --suppress=missingIncludeSystem --std=c++20 "**/*.cpp" "**/*.h"
 
     - name: clang-format
       run: |
