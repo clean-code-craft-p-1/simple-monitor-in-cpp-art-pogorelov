@@ -16,6 +16,10 @@ jobs:
     - name: setup cmake
       run: sudo apt install cmake
 
+    - name: git submodule update
+      run: |
+        git submodule update --init --recursive  
+
     - name: build
       run: |
         cmake -S . -B build

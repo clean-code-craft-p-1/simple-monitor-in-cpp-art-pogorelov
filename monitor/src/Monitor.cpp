@@ -1,4 +1,4 @@
-#include "monitor.h"
+#include "Monitor.h"
 
 #include <iostream>
 #include <optional>
@@ -32,9 +32,7 @@ template <typename T>
 std::optional<T> tryParse(const std::string& input)
 {
     std::istringstream iss(input);
-    T                  value;
-    if (iss >> value) return value;
-
+    if (T value; iss >> value) return value;
     return std::nullopt;
 }
 
