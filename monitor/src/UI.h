@@ -4,16 +4,23 @@
 
 #include "Types.h"
 
+#include <map>
 #include <optional>
 
 class UI
 {
   public:
-    [[nodiscard]] virtual std::optional<Types::IdType>    getId() const                        = 0;
-    [[nodiscard]] virtual std::optional<Types::ValueType> getValue() const                     = 0;
-    virtual void                                          report(const std::string& status) = 0;
+    using Readings = std::map<Types::IdType, Types::ValueType>;
+    struct Status
+    {
+        bool        ok;
+        std::string message;
+    };
 
-    virtual ~UI()               = default;
+    [[nodiscard]] virtual std::optional<Readings> getReadings() const          = 0;
+    virtual void                                  report(const Status& status) = 0;
+
+    virtual ~UI()            = default;
     UI(const UI&)            = delete;
     UI(UI&&)                 = delete;
     UI& operator=(const UI&) = delete;

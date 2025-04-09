@@ -3,6 +3,7 @@
 #include "ConsoleUI.h"
 #include "Types.h"
 
+#include <format>
 #include <iostream>
 #include <optional>
 #include <sstream>
@@ -19,6 +20,9 @@ constexpr auto kIdMessage         = "Enter ID (or type 'exit' to quit):\n> ";
 constexpr auto kValueMessage      = "Enter value (or type 'exit' to quit):\n> ";
 constexpr auto kIdErrorMessage    = "Invalid ID\n";
 constexpr auto kValueErrorMessage = "Invalid value\n";
+constexpr auto kRed               = "\033[0;31m";
+constexpr auto kGreen             = "\033[1;32m";
+constexpr auto kReset             = "\033[0m";
 
 template <typename T>
 std::optional<T> tryParse(const std::string& input)
@@ -50,19 +54,32 @@ std::optional<T> prompt(const std::string& message, const std::string& errorMess
         std::cout << errorMessage;
     }
 }
-} // namespace
 
-std::optional<IdType> ConsoleUI::getId() const
+std::optional<IdType> getId()
 {
     return prompt<IdType>(kIdMessage, kIdErrorMessage);
 }
 
-std::optional<ValueType> ConsoleUI::getValue() const
+std::optional<ValueType> getValue()
 {
     return prompt<ValueType>(kValueMessage, kValueErrorMessage);
 }
+} // namespace
 
-void ConsoleUI::report(const std::string& status)
+std::optional<ConsoleUI::Readings> ConsoleUI::getReadings() const
 {
-    std::cout << status << "\n";
+    const auto id = getId();
+    if (!id) return std::nullopt;
+
+    const auto value = getValue();
+    if (!value) return std::nullopt;
+
+    return Readings{{*id, *value}};
+}
+
+void ConsoleUI::report(const Status& status)
+{
+    const auto& [ok, message] = status;
+    const auto& color         = ok ? kGreen : kRed;
+    std::cout << std::format("{}{}{}\n", color, message, kReset);
 }

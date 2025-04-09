@@ -12,9 +12,8 @@ class ConsoleUI final : public UI
 {
   public:
     // From UI
-    [[nodiscard]] std::optional<Types::IdType>    getId() const override;
-    [[nodiscard]] std::optional<Types::ValueType> getValue() const override;
-    void                                          report(const std::string& status) override;
+    [[nodiscard]] std::optional<Readings> getReadings() const override;
+    void report(const Status& status) override;
 
     ConsoleUI()                            = default;
     ~ConsoleUI() override                  = default;
