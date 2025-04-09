@@ -33,6 +33,20 @@ std::optional<T> tryParse(const std::string& input)
     return std::nullopt;
 }
 
+std::optional<std::string> readLine()
+{
+    if (std::string input; std::getline(std::cin, input))
+    {
+        return input;
+    }
+    return std::nullopt;
+}
+
+bool exitRequested(const std::string& input)
+{
+    return input == "exit";
+}
+
 template <typename T>
 std::optional<T> prompt(const std::string& message, const std::string& errorMessage)
 {
@@ -40,13 +54,13 @@ std::optional<T> prompt(const std::string& message, const std::string& errorMess
     {
         std::cout << message;
 
-        std::string input;
-        if (!std::getline(std::cin, input) || input == "exit")
+        const auto input = readLine();
+        if (!input || exitRequested(*input))
         {
             return std::nullopt;
         }
 
-        if (const auto value = tryParse<T>(input))
+        if (const auto value = tryParse<T>(*input))
         {
             return *value;
         }
