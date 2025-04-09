@@ -1,0 +1,27 @@
+temperatureF:
+  id: 1
+  name: Temperature F
+  min: 95
+  max: 102
+  errorMessage: Temperature is critical!
+
+pulse:
+  id: 2
+  name: PulseRate
+  min: 60
+  max: 100
+  errorMessage: Pulse Rate is out of range!
+
+spo2:
+  id: 3
+  name: SpO2
+  min: 90.0
+  max: 100.0
+  errorMessage: Oxygen Saturation is out of range!
+
+temperatureC:
+  id: 4
+  name: Temperature C
+  min: 36
+  max: 40
+  errorMessage: Temperature is critical!

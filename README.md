@@ -1,3 +1,44 @@
+## Description
+
+This project is a simple C++ application that simulates a health monitoring system.
+
+The application is agnostic to the type of vital signs it monitors, and it can be extended to support new types of vital
+signs in the future by simple editing of the configuration file.
+
+The application reads the config.yml file to determine which vital signs to monitor and their ranges on startup.
+
+Then the user can enter the vital signs values (each vital sign has a unique id) and the application will check if the
+values are within the specified range.
+
+If a value is outside the range, the application will print a warning
+message.
+
+## Development
+
+### Build and run
+
+Since git submodules are used, you need to execute the following command before trying to build the project:
+
+```bash
+git submodule update --init --recursive
+```
+
+Then, you can build the project using the standard CMake commands:
+
+```bash
+cmake -S . -B build
+cmake --build build
+```
+
+### Dependencies
+
+This project uses the following dependencies (see **external** directory):
+
+- [CLI11](https://github.com/CLIUtils/CLI11.git )
+- [yaml-cpp]( https://github.com/jbeder/yaml-cpp.git )
+- [googletest](https://github.com/google/googletest.git)
+- [rapidcheck](https://github.com/emil-e/rapidcheck.git )
+
 # Programming Paradigms
 
 Health Monitoring Systems
@@ -8,14 +49,15 @@ Health Monitoring Systems
 
 ## Purpose
 
-Continuous monitoring of vital signs, such as respiration and heartbeat, plays a crucial role in early detection and prediction of conditions that may affect the wellbeing of a patient. 
+Continuous monitoring of vital signs, such as respiration and heartbeat, plays a crucial role in early detection and
+prediction of conditions that may affect the wellbeing of a patient.
 
 Monitoring requires accurate reading and thresholding of the vitals.
 
 ## Issues
 
 - The code here has high complexity in a single function.
-- The code is not modular 
+- The code is not modular
 - The tests are not complete - they do not cover all the needs of a consumer
 
 ## Tasks
@@ -23,7 +65,7 @@ Monitoring requires accurate reading and thresholding of the vitals.
 1. Reduce the cyclomatic complexity.
 1. Separate pure functions from I/O
 1. Avoid duplication - functions that do nearly the same thing
-1. Complete the tests - cover all conditions. 
+1. Complete the tests - cover all conditions.
 
 ## Self-evaluation
 
