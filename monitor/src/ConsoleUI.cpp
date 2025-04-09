@@ -33,13 +33,11 @@ std::optional<T> tryParse(const std::string& input)
     return std::nullopt;
 }
 
-std::optional<std::string> readLine()
+std::string readLine()
 {
-    if (std::string input; std::getline(std::cin, input))
-    {
-        return input;
-    }
-    return std::nullopt;
+    std::string input;
+    std::getline(std::cin, input);
+    return input;
 }
 
 bool exitRequested(const std::string& input)
@@ -55,12 +53,11 @@ std::optional<T> prompt(const std::string& message, const std::string& errorMess
         std::cout << message;
 
         const auto input = readLine();
-        if (!input || exitRequested(*input))
+        if (exitRequested(input))
         {
             return std::nullopt;
         }
-
-        if (const auto value = tryParse<T>(*input))
+        if (const auto value = tryParse<T>(input))
         {
             return *value;
         }
