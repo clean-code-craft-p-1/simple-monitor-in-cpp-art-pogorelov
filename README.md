@@ -13,6 +13,8 @@ values are within the specified range.
 If a value is outside the range, the application will print a warning
 message.
 
+[Screenshot of the application in action](screenshots\monitor.png) can be found in the **screenshots** directory.
+
 ## Extentions
 
 From the beginning, I aimed for a highly flexible design to support future improvements. As a result, it was relatively
@@ -49,26 +51,26 @@ is quite complex.
 I like the idea of having a helper utility with a user interface that allows editing the YAML file. A simple dynamic
 list with the ability to add, remove, and edit entries would be sufficient.
 
-### YAML configuration
+### YAML configuration example
 
 ```yaml
-pulse:                # Vital sign name
+pulse: # Vital sign name
   id: 1               # Unique identifier
-  name:               # Name of the vital sign, localized below
-    en: Pulse 
+  name: # Name of the vital sign, localized below
+    en: Pulse
     de: Pulsfrequenz
   min: 60             # Minimum value
   max: 100            # Maximum value
-  error_message:      # Out of range error message, localized below
+  error_message: # Out of range error message, localized below
     en: Pulse Rate is out of range!
     de: Pulsfrequenz ist außerhalb des Bereichs!
-  warning:            # Optional early warning section
+  warning: # Optional early warning section
     enabled: true     # Enable early warning
     tolerance: 1.5    # Tolerance value, used to calculate the warning range
-    low_warning:      # Low warning message, localized below
+    low_warning: # Low warning message, localized below
       en: Approaching bradycardia!
       de: Näher an Bradykardie!
-    high_warning:     # High warning message, localized below   
+    high_warning: # High warning message, localized below   
       en: Approaching tachycardia!
       de: Näher an Tachykardie!
 ```

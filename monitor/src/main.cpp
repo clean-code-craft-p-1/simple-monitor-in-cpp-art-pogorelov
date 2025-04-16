@@ -24,7 +24,8 @@ try
     CLI11_PARSE(app, argc, argv);
 
     const auto vitals = Config::load(configPath, locale);
-    std::cout << std::format("Configuration from {}:\n{}", configPath, toString(vitals));
+    std::cout << std::format(
+        "Configuration from \"{}\", locale \"{}\":\n{}", configPath, locale, toString(vitals));
 
     auto consoleUI = ConsoleUI{};
     return Monitor::launch(vitals, consoleUI);
