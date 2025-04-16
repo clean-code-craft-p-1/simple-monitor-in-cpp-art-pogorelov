@@ -32,12 +32,22 @@ struct Vital
     Range<ValueType> range;
     std::string      name;
     std::string      errorMessage;
+
+    struct Warning
+    {
+        ValueType   min;
+        ValueType   max;
+        std::string low;
+        std::string high;
+    };
+    std::optional<Warning> warning;
 };
 
 class Vitals : public std::map<IdType, Vital>
 {
   public:
-    std::optional<Vital> getVital(const IdType id) const noexcept
+    using std::map<IdType, Vital>::map;
+    [[nodiscard]] std::optional<Vital> getVital(const IdType id) const noexcept
     {
         if (const auto it = find(id); it != end())
         {

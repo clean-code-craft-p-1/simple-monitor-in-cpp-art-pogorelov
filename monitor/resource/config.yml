@@ -1,27 +1,59 @@
 temperatureF:
   id: 1
-  name: Temperature F
+  name:
+    en: Temperature F
+    de: Temperatur F
   min: 95
   max: 102
-  errorMessage: Temperature is critical!
+  error_message:
+    en: Temperature is out of range!
+    de: Temperatur ist außerhalb des Bereichs!
+  warning:
+    enabled: true
+    tolerance: 1.5
+    low_warning:
+      en: Approaching hypothermia!
+      de: Näher an Hypothermie!
+    high_warning:
+      en: Approaching hyperthermia!
+      de: Näher an Hyperthermie!
 
 pulse:
   id: 2
-  name: PulseRate
+  name:
+    en: Pulse
+    de: Pulsfrequenz
   min: 60
   max: 100
-  errorMessage: Pulse Rate is out of range!
+  error_message:
+    en: Pulse Rate is out of range!
+    de: Pulsfrequenz ist außerhalb des Bereichs!
+  warning:
+    enabled: true
+    tolerance: 1.5
+    low_warning:
+      en: Approaching bradycardia!
+      de: Näher an Bradykardie!
+    high_warning:
+      en: Approaching tachycardia!
+      de: Näher an Tachykardie!
 
 spo2:
   id: 3
-  name: SpO2
+  name:
+    en: SpO2
+    de: Sauerstoffsättigung
   min: 90.0
   max: 100.0
-  errorMessage: Oxygen Saturation is out of range!
-
-temperatureC:
-  id: 4
-  name: Temperature C
-  min: 36
-  max: 40
-  errorMessage: Temperature is critical!
+  error_message:
+    en: Oxygen Saturation is out of range!
+    de: Sauerstoffsättigung ist außerhalb des Bereichs!
+  warning:
+    enabled: false
+    tolerance: 1.5
+    low_warning:
+      en: Approaching hypoxemia!
+      de: Näher an Hypoxämie!
+    high_warning:
+      en: Approaching hyperoxia!
+      de: Näher an Hyperoxie!

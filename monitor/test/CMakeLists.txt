@@ -14,6 +14,7 @@ target_link_libraries(
         ${PROJECT_NAME}
         PRIVATE Monitor.Lib
         GTest::gtest_main
+        GTest::gmock
         rapidcheck
 )
 

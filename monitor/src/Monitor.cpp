@@ -26,6 +26,17 @@ std::optional<Vital> findVital(const Vitals& vitals, const IdType id)
 [[nodiscard]] UI::Status status(const Vital& vital, const ValueType value)
 {
     const auto inRange = vital.range.contains(value);
+    if (inRange && vital.warning)
+    {
+        if (value <= vital.warning->min)
+        {
+            return UI::Status{.ok = false, .message = vital.warning->low};
+        }
+        if (value >= vital.warning->max)
+        {
+            return UI::Status{.ok = false, .message = vital.warning->high};
+        }
+    }
     const auto message = inRange ? "OK" : vital.errorMessage;
     return UI::Status{.ok = inRange, .message = message};
 }

@@ -8,6 +8,6 @@
 
 namespace Config {
 
-[[nodiscard]] Types::Vitals load(const std::filesystem::path& path);
+[[nodiscard]] Types::Vitals load(const std::filesystem::path& path, const std::string& locale);
 
 } // namespace Config

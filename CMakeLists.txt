@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
 set(CMAKE_CXX_FLAGS_RELEASE "/MT")
-# set(CMAKE_CXX_FLAGS_DEBUG "/MDd")
-# set(CMAKE_CXX_FLAGS_RELEASE "/MD")
 
 add_subdirectory(monitor)
 add_subdirectory(external/googletest)
