@@ -13,6 +13,66 @@ values are within the specified range.
 If a value is outside the range, the application will print a warning
 message.
 
+## Extentions
+
+From the beginning, I aimed for a highly flexible design to support future improvements. As a result, it was relatively
+easy to extend the functionality. I chose to focus on enhancing configurability through the YAML file.
+
+### Extension 1: Early Warning
+
+The monitor can be extended to support early warning feature per vital. To support this, user should specify the warning
+section in the config file.
+Since the warning feature is optional, backward compatibility is preserved: this part of the configuration can be
+completely removed, and the application will still work correctly. At the same time, to avoid removing parameters and
+localization entries from the configuration every time the feature needs to be disabled, there is an **enabled**
+setting.
+
+### Extension 2: Support a language in addition to English
+
+Every string that will be shown to the user is localized in the configuration file. The application receives a
+command-line argument specifying the locale to use. If a localized version of a string is not available for the given
+locale, the default (English) version is used instead.
+
+### Extension 3: Accept input in different units
+
+I believe the simplest way to support different units of measurement is to just add a separate vital in the
+configuration file. The thing is, converting between different units can be non-trivial, and the application is, by
+design, agnostic to such details. To preserve this flexibility, I don’t want to introduce any conversion logic into the
+project.
+
+However, a potential solution could be to implement various transformation algorithms inside a library, and then specify
+in the config file which algorithm to use along with its parameters for unit handling. That said, I think this approach
+is quite complex.
+
+### Extension idea: UI configuration utility
+
+I like the idea of having a helper utility with a user interface that allows editing the YAML file. A simple dynamic
+list with the ability to add, remove, and edit entries would be sufficient.
+
+### YAML configuration
+
+```yaml
+pulse:                # Vital sign name
+  id: 1               # Unique identifier
+  name:               # Name of the vital sign, localized below
+    en: Pulse 
+    de: Pulsfrequenz
+  min: 60             # Minimum value
+  max: 100            # Maximum value
+  error_message:      # Out of range error message, localized below
+    en: Pulse Rate is out of range!
+    de: Pulsfrequenz ist außerhalb des Bereichs!
+  warning:            # Optional early warning section
+    enabled: true     # Enable early warning
+    tolerance: 1.5    # Tolerance value, used to calculate the warning range
+    low_warning:      # Low warning message, localized below
+      en: Approaching bradycardia!
+      de: Näher an Bradykardie!
+    high_warning:     # High warning message, localized below   
+      en: Approaching tachycardia!
+      de: Näher an Tachykardie!
+```
+
 ## Development
 
 ### Build and run
