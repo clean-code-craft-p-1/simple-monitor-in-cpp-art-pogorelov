@@ -27,7 +27,7 @@ using Types::Vital;
 using Types::Vitals;
 using Readings = UI::Readings;
 using Status   = UI::Status;
-using Warning  = Vital::Warning;
+using enum UI::Status::Type;
 
 struct UIMock : public UI
 {
@@ -47,7 +47,7 @@ const auto     kVital        = Vital{.id           = kId,
 const auto kVitalWithWarning = Vital{.id           = kId,
                                      .range        = {.min = 0, .max = 100},
                                      .errorMessage = kErrorMessage,
-                                     .warning      = Warning{
+                                     .warning      = Vital::Warning{
                                               .min  = 10,
                                               .max  = 90,
                                               .low  = kLowMessage,
@@ -85,7 +85,7 @@ TEST_F(MonitorTest, givenIncorrectReadingsMonitorShouldRequestAgain)
 
 TEST_F(MonitorTest, givenReadingsInRangeMonitorShouldReportOk)
 {
-    EXPECT_CALL(ui, report(Field(&Status::ok, true))).Times(1);
+    EXPECT_CALL(ui, report(Field(&Status::type, Ok))).Times(1);
 
     const auto vitals   = Vitals{{kId, kVital}};
     const auto readings = Readings{{kId, 50}};
@@ -95,7 +95,8 @@ TEST_F(MonitorTest, givenReadingsInRangeMonitorShouldReportOk)
 TEST_F(MonitorTest, givenReadingsNotInRangeMonitorShouldReportError)
 {
     EXPECT_CALL(
-        ui, report(AllOf(Field(&Status::ok, false), Field(&Status::message, StrEq(kErrorMessage)))))
+        ui,
+        report(AllOf(Field(&Status::type, Error), Field(&Status::message, StrEq(kErrorMessage)))))
         .Times(1);
 
     const auto vitals   = Vitals{{kId, kVital}};
@@ -105,7 +106,7 @@ TEST_F(MonitorTest, givenReadingsNotInRangeMonitorShouldReportError)
 
 TEST_F(MonitorTest, givenWarningDisabledAndLowReadingsMonitorShouldReportOk)
 {
-    EXPECT_CALL(ui, report(Field(&Status::ok, true))).Times(1);
+    EXPECT_CALL(ui, report(Field(&Status::type, Ok))).Times(1);
 
     const auto vitals   = Vitals{{kId, kVital}};
     const auto readings = Readings{{kId, 5}};
@@ -114,7 +115,7 @@ TEST_F(MonitorTest, givenWarningDisabledAndLowReadingsMonitorShouldReportOk)
 
 TEST_F(MonitorTest, givenWarningDisabledAndHighReadingsMonitorShouldReportOk)
 {
-    EXPECT_CALL(ui, report(Field(&Status::ok, true))).Times(1);
+    EXPECT_CALL(ui, report(Field(&Status::type, Ok))).Times(1);
 
     const auto vitals   = Vitals{{kId, kVital}};
     const auto readings = Readings{{kId, 95}};
@@ -124,7 +125,8 @@ TEST_F(MonitorTest, givenWarningDisabledAndHighReadingsMonitorShouldReportOk)
 TEST_F(MonitorTest, givenWarningEnabledAndLowReadingsMonitorShouldReportWarning)
 {
     EXPECT_CALL(
-        ui, report(AllOf(Field(&Status::ok, false), Field(&Status::message, StrEq(kLowMessage)))))
+        ui,
+        report(AllOf(Field(&Status::type, Warning), Field(&Status::message, StrEq(kLowMessage)))))
         .Times(1);
 
     const auto vitals   = Vitals{{kId, kVitalWithWarning}};
@@ -135,7 +137,8 @@ TEST_F(MonitorTest, givenWarningEnabledAndLowReadingsMonitorShouldReportWarning)
 TEST_F(MonitorTest, givenWarningEnabledAndHighReadingsMonitorShouldReportWarning)
 {
     EXPECT_CALL(
-        ui, report(AllOf(Field(&Status::ok, false), Field(&Status::message, StrEq(kHighMessage)))))
+        ui,
+        report(AllOf(Field(&Status::type, Warning), Field(&Status::message, StrEq(kHighMessage)))))
         .Times(1);
 
     const auto vitals   = Vitals{{kId, kVitalWithWarning}};

@@ -22,6 +22,7 @@ constexpr auto kIdErrorMessage    = "Invalid ID\n";
 constexpr auto kValueErrorMessage = "Invalid value\n";
 constexpr auto kRed               = "\033[0;31m";
 constexpr auto kGreen             = "\033[1;32m";
+constexpr auto kYellow            = "\033[1;33m";
 constexpr auto kReset             = "\033[0m";
 
 template <typename T>
@@ -75,6 +76,22 @@ std::optional<ValueType> getValue()
 {
     return prompt<ValueType>(kValueMessage, kValueErrorMessage);
 }
+
+std::string color(const UI::Status::Type type)
+{
+    using enum UI::Status::Type;
+    switch (type)
+    {
+        case Ok:
+            return kGreen;
+        case Warning:
+            return kYellow;
+        case Error:
+            return kRed;
+        default:
+            return kReset;
+    }
+}
 } // namespace
 
 std::optional<ConsoleUI::Readings> ConsoleUI::getReadings() const
@@ -90,7 +107,6 @@ std::optional<ConsoleUI::Readings> ConsoleUI::getReadings() const
 
 void ConsoleUI::report(const Status& status)
 {
-    const auto& [ok, message] = status;
-    const auto& color         = ok ? kGreen : kRed;
-    std::cout << std::format("{}{}{}\n", color, message, kReset);
+    const auto& [type, message] = status;
+    std::cout << std::format("{}{}{}\n", color(type), message, kReset);
 }

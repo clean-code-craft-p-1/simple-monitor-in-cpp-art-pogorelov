@@ -14,7 +14,13 @@ class UI
     using Readings = std::map<Types::IdType, Types::ValueType>;
     struct Status
     {
-        bool        ok;
+        enum class Type : std::uint8_t
+        {
+            Ok,
+            Warning,
+            Error,
+        };
+        Type        type;
         std::string message;
     };
 

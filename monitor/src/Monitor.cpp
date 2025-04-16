@@ -25,20 +25,22 @@ std::optional<Vital> findVital(const Vitals& vitals, const IdType id)
 
 [[nodiscard]] UI::Status status(const Vital& vital, const ValueType value)
 {
+    using enum UI::Status::Type;
     const auto inRange = vital.range.contains(value);
     if (inRange && vital.warning)
     {
         if (value <= vital.warning->min)
         {
-            return UI::Status{.ok = false, .message = vital.warning->low};
+            return UI::Status{.type = Warning, .message = vital.warning->low};
         }
         if (value >= vital.warning->max)
         {
-            return UI::Status{.ok = false, .message = vital.warning->high};
+            return UI::Status{.type = Warning, .message = vital.warning->high};
         }
     }
     const auto message = inRange ? "OK" : vital.errorMessage;
-    return UI::Status{.ok = inRange, .message = message};
+    const auto type    = inRange ? Ok : Error;
+    return UI::Status{.type = type, .message = message};
 }
 
 void report(const Vitals& vitals, const UI::Readings& readings, UI& ui)
