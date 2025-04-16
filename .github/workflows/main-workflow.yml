@@ -16,13 +16,17 @@ jobs:
     - name: setup cmake
       run: sudo apt install cmake
 
+    - name: git submodule update
+      run: |
+        git submodule update --init --recursive  
+
     - name: build
       run: |
         cmake -S . -B build
         cmake --build build
       
-    - name: run
-      run: build/test-monitor
+    - name: run tests
+      run: ctest --test-dir build --extra-verbose
 
     - name: collect coverage
       run: gcovr --gcov-exclude=".*test.*" -r . --html --html-details -o coverage.html --print-summary
